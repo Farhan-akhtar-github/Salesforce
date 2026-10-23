@@ -1,0 +1,62 @@
+<template>
+  <div class="slds-grid slds-wrap slds-gutters">
+    <div class="slds-col slds-size_1-of-1 slds-large-size_5-of-12">
+      <lightning-card title="New Asset" icon-name="standard:asset_object">
+        <div class="slds-p-horizontal_medium">
+          <lightning-record-edit-form
+            object-api-name={objectApiName}
+            onsuccess={handleSuccess}
+            onerror={handleError}
+          >
+            <lightning-messages></lightning-messages>
+            <template for:each={fields} for:item="field">
+              <lightning-input-field
+                key={field}
+                field-name={field}
+              ></lightning-input-field>
+            </template>
+            <div class="slds-m-top_medium slds-m-bottom_small">
+              <lightning-button
+                variant="neutral"
+                label="Reset"
+                class="slds-m-right_x-small"
+                onclick={handleReset}
+              >
+              </lightning-button>
+              <lightning-button
+                variant="brand"
+                type="submit"
+                label="Save Asset"
+              >
+              </lightning-button>
+            </div>
+          </lightning-record-edit-form>
+        </div>
+      </lightning-card>
+    </div>
+
+    <div class="slds-col slds-size_1-of-1 slds-large-size_7-of-12">
+      <lightning-card
+        title="Tracked Assets"
+        icon-name="standard:multi_picklist"
+      >
+        <div class="slds-p-horizontal_small">
+          <template lwc:if={hasAssets}>
+            <lightning-datatable
+              key-field="Id"
+              data={assets}
+              columns={columns}
+              hide-checkbox-column
+            >
+            </lightning-datatable>
+          </template>
+          <template lwc:else>
+            <p class="slds-p-around_medium slds-text-color_weak">
+              No assets yet. Use the form to add the first one.
+            </p>
+          </template>
+        </div>
+      </lightning-card>
+    </div>
+  </div>
+</template>
